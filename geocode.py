@@ -2,6 +2,7 @@ import pandas as pd
 from geopy.geocoders import GoogleV3
 import geopy.distance
 import googlemaps
+import pprint
 
 API='AIzaSyCnwdJb9z0rhD6HjpNYQnHvV3ObR644UEI'
 geolocator = GoogleV3(api_key=API)
@@ -25,3 +26,10 @@ p_1 = (my_locations['lat'][0], my_locations['lon'][0])
 p_2 = (my_locations['lat'][1], my_locations['lon'][1]) 
 d=geopy.distance.geodesic(p_1, p_2).km
 print(d)
+
+# Calculate driving distance using Google Distance 
+gmap = googlemaps.Client(key=API)
+d_goog = gmap.distance_matrix(p_1, p_2, mode='driving') 
+print(d_goog)
+new_d = d_goog['rows'][0]['elements'][0]['distance']['value'] 
+print(new_d)
